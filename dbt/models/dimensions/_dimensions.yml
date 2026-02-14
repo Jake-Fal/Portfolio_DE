@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: dim_account
+    description: "Dimension table containing unique account identifiers"
+    columns:
+      - name: account_id
+        description: "Unique account identifier"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_symbol
+    description: "Dimension table containing unique trading symbols"
+    columns:
+      - name: symbol
+        description: "Trading symbol"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_date
+    description: "Date dimension for time-based analysis"
+    columns:
+      - name: date_day
+        description: "Calendar date"
+        tests:
+          - unique
+          - not_null

@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)",
+      "Bash(powershell -Command \"Start-Process ''C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe''\")",
+      "Bash(MSYS_NO_PATHCONV=1 docker exec:*)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(timeout 10 python:*)",
+      "Bash(pip uninstall:*)",
+      "Bash(timeout 5 python:*)",
+      "Bash(timeout 8 python:*)",
+      "Bash(dbt debug:*)",
+      "Bash(duckdb:*)",
+      "Bash(dbt run:*)",
+      "Bash(dbt deps:*)",
+      "Bash(dbt test:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

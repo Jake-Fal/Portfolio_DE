@@ -1,0 +1,59 @@
+name: 'portfolio_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'portfolio_analytics'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+  - "logs"
+
+models:
+  portfolio_analytics:
+    # Staging layer - views for initial data access
+    staging:
+      +materialized: view
+      +schema: staging
+      +docs:
+        node_color: "#8BC34A"
+
+    # Intermediate layer - ephemeral transformations
+    intermediate:
+      +materialized: ephemeral
+
+    # Dimension tables - slowly changing dimensions
+    dimensions:
+      +materialized: table
+      +schema: dimensions
+      +docs:
+        node_color: "#2196F3"
+
+    # Fact tables - business events and aggregations
+    facts:
+      +materialized: table
+      +schema: facts
+      +docs:
+        node_color: "#FF9800"
+
+    # Metrics - calculated business metrics
+    metrics:
+      +materialized: view
+      +schema: metrics
+      +docs:
+        node_color: "#9C27B0"
+
+vars:
+  # Start date for date dimension
+  date_spine_start: '2024-01-01'
+  # Risk-free rate for Sharpe ratio (0% for simplicity)
+  risk_free_rate: 0.0
+  # Trading days per year for annualization
+  trading_days_per_year: 252

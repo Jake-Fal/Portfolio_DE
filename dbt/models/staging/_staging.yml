@@ -1,0 +1,163 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw tables populated by Spark streaming jobs"
+    database: portfolio
+    schema: main
+    tables:
+      - name: raw_trades
+        description: "Raw trade execution events from Kafka"
+        columns:
+          - name: trade_id
+            description: "Unique trade identifier"
+            tests:
+              - unique
+              - not_null
+          - name: timestamp
+            description: "Trade execution timestamp"
+            tests:
+              - not_null
+
+      - name: raw_prices
+        description: "Raw market price events from Kafka"
+        columns:
+          - name: symbol
+            description: "Trading symbol"
+            tests:
+              - not_null
+          - name: price
+            description: "Market price"
+            tests:
+              - not_null
+          - name: timestamp
+            description: "Price observation timestamp"
+            tests:
+              - not_null
+
+      - name: raw_cash_events
+        description: "Raw cash movement events from Kafka"
+        columns:
+          - name: event_id
+            description: "Unique cash event identifier"
+            tests:
+              - unique
+              - not_null
+          - name: timestamp
+            description: "Cash event timestamp"
+            tests:
+              - not_null
+
+models:
+  - name: stg_trades
+    description: "Cleaned and standardized trade events"
+    columns:
+      - name: trade_id
+        description: "Unique trade identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: account_id
+        description: "Account that executed the trade"
+        tests:
+          - not_null
+
+      - name: symbol
+        description: "Trading symbol"
+        tests:
+          - not_null
+
+      - name: side
+        description: "Trade direction (BUY or SELL)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['BUY', 'SELL']
+
+      - name: quantity
+        description: "Number of shares traded"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: price
+        description: "Execution price per share"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: trade_timestamp
+        description: "Trade execution timestamp"
+        tests:
+          - not_null
+
+      - name: trade_date
+        description: "Trade execution date"
+        tests:
+          - not_null
+
+  - name: stg_prices
+    description: "Cleaned and standardized price events"
+    columns:
+      - name: symbol
+        description: "Trading symbol"
+        tests:
+          - not_null
+
+      - name: price
+        description: "Market price"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: price_timestamp
+        description: "Price observation timestamp"
+        tests:
+          - not_null
+
+      - name: price_date
+        description: "Price observation date"
+        tests:
+          - not_null
+
+  - name: stg_cash_events
+    description: "Cleaned and standardized cash movement events"
+    columns:
+      - name: event_id
+        description: "Unique cash event identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: account_id
+        description: "Account for cash movement"
+        tests:
+          - not_null
+
+      - name: amount
+        description: "Cash amount"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: cash_type
+        description: "Type of cash movement"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['DEPOSIT', 'WITHDRAWAL', 'DIVIDEND', 'INTEREST']
+
+      - name: cash_timestamp
+        description: "Cash event timestamp"
+        tests:
+          - not_null
+
+      - name: cash_date
+        description: "Cash event date"
+        tests:
+          - not_null

@@ -1,0 +1,23 @@
+portfolio_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: '../data/warehouse/portfolio.duckdb'
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet
+      settings:
+        memory_limit: '4GB'
+        temp_directory: '/tmp'
+
+    prod:
+      type: duckdb
+      path: '../data/warehouse/portfolio_prod.duckdb'
+      threads: 8
+      extensions:
+        - httpfs
+        - parquet
+      settings:
+        memory_limit: '8GB'

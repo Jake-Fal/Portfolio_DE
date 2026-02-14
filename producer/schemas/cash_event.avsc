@@ -1,0 +1,50 @@
+{
+  "type": "record",
+  "name": "CashEvent",
+  "namespace": "com.portfolio.events",
+  "doc": "Represents a cash movement (deposit, withdrawal, dividend, or interest)",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique identifier for the cash event"
+    },
+    {
+      "name": "account_id",
+      "type": "string",
+      "doc": "Account for the cash movement"
+    },
+    {
+      "name": "amount",
+      "type": "double",
+      "doc": "Cash amount (positive value; direction determined by type)"
+    },
+    {
+      "name": "type",
+      "type": {
+        "type": "enum",
+        "name": "CashType",
+        "symbols": ["DEPOSIT", "WITHDRAWAL", "DIVIDEND", "INTEREST"]
+      },
+      "doc": "Type of cash movement"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis",
+      "doc": "Event time in milliseconds since epoch"
+    },
+    {
+      "name": "description",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Optional description of the cash movement"
+    },
+    {
+      "name": "event_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Schema version for backward compatibility"
+    }
+  ]
+}

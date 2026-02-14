@@ -1,0 +1,54 @@
+{
+  "type": "record",
+  "name": "TradeEvent",
+  "namespace": "com.portfolio.events",
+  "doc": "Represents a trade execution event",
+  "fields": [
+    {
+      "name": "trade_id",
+      "type": "string",
+      "doc": "Unique identifier for the trade (e.g., TRD_uuid)"
+    },
+    {
+      "name": "account_id",
+      "type": "string",
+      "doc": "Account that executed the trade (e.g., ACC001)"
+    },
+    {
+      "name": "symbol",
+      "type": "string",
+      "doc": "Trading symbol (e.g., AAPL, GOOGL)"
+    },
+    {
+      "name": "side",
+      "type": {
+        "type": "enum",
+        "name": "TradeSide",
+        "symbols": ["BUY", "SELL"]
+      },
+      "doc": "Direction of the trade"
+    },
+    {
+      "name": "quantity",
+      "type": "double",
+      "doc": "Number of shares traded (positive number)"
+    },
+    {
+      "name": "price",
+      "type": "double",
+      "doc": "Execution price per share"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis",
+      "doc": "Trade execution time in milliseconds since epoch"
+    },
+    {
+      "name": "event_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Schema version for backward compatibility"
+    }
+  ]
+}

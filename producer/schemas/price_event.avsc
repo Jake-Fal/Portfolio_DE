@@ -1,0 +1,36 @@
+{
+  "type": "record",
+  "name": "PriceEvent",
+  "namespace": "com.portfolio.events",
+  "doc": "Represents a market price update",
+  "fields": [
+    {
+      "name": "symbol",
+      "type": "string",
+      "doc": "Trading symbol"
+    },
+    {
+      "name": "price",
+      "type": "double",
+      "doc": "Current market price"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis",
+      "doc": "Price observation time"
+    },
+    {
+      "name": "source",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Price data source (e.g., 'simulated', 'yahoo_finance')"
+    },
+    {
+      "name": "event_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Schema version for backward compatibility"
+    }
+  ]
+}

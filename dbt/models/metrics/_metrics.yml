@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: daily_returns
+    description: "Daily percentage returns for each account"
+    columns:
+      - name: account_id
+        description: "Account identifier"
+        tests:
+          - not_null
+      - name: value_date
+        description: "Return date"
+        tests:
+          - not_null
+      - name: daily_return
+        description: "Daily return as decimal (e.g., 0.05 = 5%)"
+      - name: daily_return_pct
+        description: "Daily return as percentage"
+
+  - name: cumulative_returns
+    description: "Cumulative returns from inception for each account"
+    columns:
+      - name: account_id
+        description: "Account identifier"
+        tests:
+          - not_null
+      - name: value_date
+        description: "Date"
+        tests:
+          - not_null
+      - name: cumulative_return
+        description: "Cumulative return from inception"
+
+  - name: drawdown
+    description: "Drawdown from peak portfolio value"
+    columns:
+      - name: account_id
+        description: "Account identifier"
+        tests:
+          - not_null
+      - name: value_date
+        description: "Date"
+        tests:
+          - not_null
+      - name: drawdown
+        description: "Current drawdown from peak (negative value)"
+      - name: max_drawdown
+        description: "Maximum drawdown to date"
+
+  - name: rolling_volatility
+    description: "30-day rolling volatility of returns"
+    columns:
+      - name: account_id
+        description: "Account identifier"
+        tests:
+          - not_null
+      - name: value_date
+        description: "Date"
+        tests:
+          - not_null
+      - name: volatility_30d
+        description: "30-day rolling standard deviation of returns"
+      - name: annualized_volatility
+        description: "Annualized volatility (30-day vol * sqrt(252))"

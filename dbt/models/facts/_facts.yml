@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: fact_trades
+    description: "Fact table containing all trade executions with calculated fields"
+    columns:
+      - name: trade_id
+        description: "Unique trade identifier"
+        tests:
+          - unique
+          - not_null
+      - name: trade_value
+        description: "Total trade value (quantity * price)"
+        tests:
+          - not_null
+
+  - name: fact_positions_daily
+    description: "Daily snapshot of cumulative positions by account and symbol"
+    columns:
+      - name: account_id
+        description: "Account identifier"
+        tests:
+          - not_null
+      - name: symbol
+        description: "Trading symbol"
+        tests:
+          - not_null
+      - name: position_date
+        description: "Position date"
+        tests:
+          - not_null
+      - name: cumulative_position
+        description: "Cumulative position (BUY - SELL)"
+
+  - name: fact_portfolio_value_daily
+    description: "Daily portfolio value including positions and cash"
+    columns:
+      - name: account_id
+        description: "Account identifier"
+        tests:
+          - not_null
+      - name: value_date
+        description: "Valuation date"
+        tests:
+          - not_null
+      - name: total_value
+        description: "Total portfolio value (positions + cash)"
+
+  - name: fact_pnl_daily
+    description: "Daily profit and loss calculations"
+    columns:
+      - name: account_id
+        description: "Account identifier"
+        tests:
+          - not_null
+      - name: pnl_date
+        description: "PnL calculation date"
+        tests:
+          - not_null
